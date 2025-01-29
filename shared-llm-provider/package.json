@@ -1,0 +1,20 @@
+{
+  "name": "shared-llm-provider",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@agenite/bedrock": "^0.2.2",
+    "@agenite/ollama": "^0.2.2",
+    "chalk": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.12.0"
+  }
+}

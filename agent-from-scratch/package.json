@@ -1,0 +1,21 @@
+{
+  "name": "agent-from-scratch",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "basic": "tsx src/1-basic-llm-call",
+    "context": "tsx src/2-adding-context",
+    "tools": "tsx src/3-invoking-tools",
+    "agent": "tsx src/4-self-feedback"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Step by step guide to building an AI agent from scratch",
+  "dependencies": {
+    "shared-llm-provider": "*"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0"
+  }
+}
