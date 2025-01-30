@@ -119,13 +119,7 @@ This project uses Amazon Bedrock by default, with Ollama as an alternative for l
 ### Ollama (Local Development)
 
 1. **Install Ollama**:
-   ```bash
-   # macOS
-   brew install ollama
-   
-   # Linux
-   curl -fsSL https://ollama.com/install.sh | sh
-   ```
+   Go to https://ollama.com/ and install the latest version
 
 2. **Pull Required Model**:
    ```bash
@@ -142,6 +136,8 @@ This project uses Amazon Bedrock by default, with Ollama as an alternative for l
    ```bash
    ollama serve
    ```
+
+   **Note**: Some examples might not work with Ollama, but you can still use them as a reference.
 
 ### Verifying Setup
 
