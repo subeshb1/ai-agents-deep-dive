@@ -20,6 +20,7 @@
     "packages/*",
     "shared-llm-provider",
     "agent-from-scratch",
-    "coding-agent"
+    "coding-agent",
+    "researcher-agent"
   ]
 }

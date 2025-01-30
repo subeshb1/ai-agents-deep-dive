@@ -1,0 +1,31 @@
+{
+  "name": "researcher-agent",
+  "version": "1.0.0",
+  "description": "An AI researcher agent with web scraping capabilities",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "researcher",
+    "web-scraping"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@agenite/agent": "^0.2.2",
+    "@agenite/tool": "^0.2.1",
+    "shared-llm-provider": "*",
+    "cheerio": "^1.0.0-rc.12",
+    "axios": "^1.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/cheerio": "^0.22.35",
+    "tsx": "^4.7.0",
+    "typescript": "^5.0.0"
+  }
+} 

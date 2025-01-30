@@ -11,7 +11,7 @@
   "description": "",
   "dependencies": {
     "@agenite/bedrock": "^0.2.2",
-    "@agenite/ollama": "^0.2.2",
+    "@agenite/ollama": "^0.2.3-alpha.0",
     "chalk": "^4.1.2"
   },
   "devDependencies": {

@@ -1,84 +1,200 @@
-# Turborepo starter
+# Deep Dive into Building AI Agents with LLMs
 
-This Turborepo starter is maintained by the Turborepo core team.
+This repository is the official companion code for the blog series "Deep Dive into Building AI Agents with LLMs". It provides a hands-on, practical approach to understanding and building AI agents, from basic implementations to complex, specialized systems.
 
-## Using this example
+## 📚 About the Blog Series
 
-Run the following command:
+This repository contains all the code examples and projects discussed in the blog series. Each project represents a different aspect of AI agent development, allowing readers to:
+- Follow along with practical examples
+- Experiment with different agent architectures
+- Build their own AI agents from scratch
+- Understand real-world agent implementations
 
-```sh
-npx create-turbo@latest
-```
+## 🎓 Learning Path
 
-## What's inside?
+The repository is structured to follow the blog series progression:
 
-This Turborepo includes the following packages/apps:
+### 1. Agent from Scratch
+Start here to understand the fundamentals:
+- Basic LLM interactions
+- Context and system prompts
+- Tool invocation
+- Self-feedback mechanisms
 
-### Apps and Packages
+### 2. Coding Agent
+Progress to a practical implementation:
+- Code analysis and generation
+- File system operations
+- Interactive assistance
+- Development workflow integration
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### 3. Researcher Agent
+Explore advanced agent capabilities:
+- Multi-source research capabilities
+- Agent collaboration architecture
+- Automated blog writing
+- Content synthesis from multiple sources
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
+## 🏗️ Repository Structure
 
 ```
-cd my-turborepo
-pnpm dev
+ai-agents-deep-dive/
+├── agent-from-scratch/  # Start here - Basic concepts and fundamentals
+├── coding-agent/        # Intermediate - Practical coding assistant
+├── researcher-agent/    # Advanced - Complex multi-agent system
+├── shared-llm-provider/ # Shared LLM infrastructure
+└── packages/           # Shared utilities and configurations
 ```
 
-### Remote Caching
+## 🛠️ Key Concepts Covered
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+- **LLM Integration**: Working with modern language models
+- **Tool-based Architecture**: Building modular, extensible agents
+- **TypeScript**: Using strong typing for robust agent development
+- **Error Handling**: Implementing robust error management
+- **Clean Output**: Creating user-friendly interfaces
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+## 🚦 Getting Started
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
+1. Clone the repository:
+```bash
+git clone [repository-url]
+cd ai-agents-deep-dive
 ```
 
-## Useful Links
+2. Install dependencies:
+```bash
+npm install
+```
 
-Learn more about the power of Turborepo:
+## 📋 Prerequisites
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+- Node.js 18+
+- npm or yarn
+- AWS Account (for Bedrock)
+- Git
+- (Optional) Ollama for local development
+
+## 🔧 Installation
+
+1. Clone the repository:
+```bash
+git clone [repository-url]
+cd ai-agents-deep-dive
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+## ⚙️ LLM Provider Setup
+
+This project uses Amazon Bedrock by default, with Ollama as an alternative for local development.
+
+### Amazon Bedrock (Default)
+
+1. **AWS Account Setup**:
+   - Ensure you have an AWS account with Bedrock access
+   - Request access to the Claude models in the Bedrock console
+   - Set up AWS credentials locally
+
+2. **Configure AWS Credentials**:
+   ```bash
+   # Option 1: Using AWS CLI
+   aws configure
+   
+   # Option 2: Environment variables
+   export AWS_ACCESS_KEY_ID="your-access-key"
+   export AWS_SECRET_ACCESS_KEY="your-secret-key"
+   export AWS_REGION="your-region"  # e.g., us-east-1 where you have access to Bedrock models
+   ```
+
+3. **Set Bedrock Environment Variables**:
+   ```bash
+   export LLM_PROVIDER=bedrock
+   export LLM_MODEL_ID=anthropic.claude-v2  # or anthropic.claude-3-sonnet-20240229-v1:0 or any bedrock model
+   ```
+
+### Ollama (Local Development)
+
+1. **Install Ollama**:
+   ```bash
+   # macOS
+   brew install ollama
+   
+   # Linux
+   curl -fsSL https://ollama.com/install.sh | sh
+   ```
+
+2. **Pull Required Model**:
+   ```bash
+   ollama pull llama2
+   ```
+
+3. **Set Ollama Environment Variables**:
+   ```bash
+   export LLM_PROVIDER=ollama
+   export LLM_MODEL_ID=llama2    # or any other supported model
+   ```
+
+4. **Start Ollama Server**:
+   ```bash
+   ollama serve
+   ```
+
+### Verifying Setup
+
+Test your LLM provider setup:
+```bash
+# Navigate to agent-from-scratch
+cd agent-from-scratch
+
+# Run the basic example
+npm run basic
+```
+
+If everything is set up correctly, you should see a response from the LLM.
+
+## 🎯 What You'll Build
+
+1. **Foundation (Agent from Scratch)**
+   - Understanding LLM interactions
+   - Building basic agent architecture
+   - Implementing tool usage
+   - Creating self-improving agents
+
+2. **Practical Application (Coding Agent)**
+   - Code analysis and generation
+   - Development assistance
+   - File system operations
+   - Real-world agent usage
+
+3. **Advanced Implementation (Researcher Agent)**
+   - Multi-agent systems
+   - Content research and synthesis
+   - Automated content creation
+   - Complex workflow orchestration
+
+## 🤝 Contributing
+
+Found a bug or want to improve the examples? Contributions are welcome!
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+MIT License
+
+## 🙏 Acknowledgments
+
+- Built with modern AI techniques and best practices
+- Inspired by real-world agent implementations
+- Uses the @agenite framework for agent development
+
+---
+*Note: This repository is actively maintained alongside the blog series. Check back for updates and new examples as new blog posts are published.*

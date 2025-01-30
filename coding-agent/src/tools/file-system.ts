@@ -1,106 +1,109 @@
-import { Tool, ToolExecuteParams } from '@agenite/tool';
-import * as fs from 'fs/promises';
-import * as path from 'path';
+import fs from 'fs/promises';
+import path from 'path';
+import { Tool } from '@agenite/tool';
 
-interface FileParams {
-  filePath: string;
+interface FileSystemInput {
+  operation: 'read' | 'write' | 'list' | 'exists' | 'mkdir';
+  path: string;
+  content?: string;
 }
 
-interface WriteFileParams extends FileParams {
-  content: string;
+export function createFileSystemTool(): Tool<FileSystemInput> {
+  return new Tool({
+    name: 'file_system',
+    description:
+      'Read, write, and check files in the project. Can create both files and directories',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        operation: {
+          type: 'string',
+          enum: ['read', 'write', 'list', 'exists', 'mkdir'],
+        },
+        path: { type: 'string', description: 'relative path to the file' },
+        content: {
+          type: 'string',
+          description: 'Content to write to the file',
+        },
+      },
+      required: ['operation', 'path'],
+    },
+
+    async execute({ input }) {
+      const startTime = Date.now();
+
+      const rootPath = process.cwd() + '/' + 'output';
+      const fullPath = rootPath + '/' + input.path;
+      try {
+        switch (input.operation) {
+          case 'read': {
+            const content = await fs.readFile(fullPath, 'utf-8');
+            return {
+              success: true,
+              data: content,
+              duration: Date.now() - startTime,
+            };
+          }
+
+          case 'write': {
+            await fs.mkdir(path.dirname(fullPath), { recursive: true });
+            await fs.writeFile(fullPath, input.content || '');
+            return {
+              success: true,
+              data: `File written to ${input.path}`,
+              duration: Date.now() - startTime,
+            };
+          }
+
+          case 'list': {
+            const files = await fs.readdir(fullPath, { recursive: true });
+            return {
+              success: true,
+              data: files.join('\n'),
+              duration: Date.now() - startTime,
+            };
+          }
+
+          case 'exists': {
+            try {
+              await fs.access(input.path);
+              return {
+                success: true,
+                data: 'true',
+                duration: Date.now() - startTime,
+              };
+            } catch {
+              return {
+                success: true,
+                data: 'false',
+                duration: Date.now() - startTime,
+              };
+            }
+          }
+
+          case 'mkdir': {
+            await fs.mkdir(fullPath, { recursive: true });
+            return {
+              success: true,
+              data: `Directory created at ${input.path}`,
+              duration: Date.now() - startTime,
+            };
+          }
+
+          default:
+            return {
+              success: false,
+              data: `Unknown operation: ${input.operation}`,
+              duration: Date.now() - startTime,
+            };
+        }
+      } catch (error) {
+        return {
+          success: false,
+          data: error instanceof Error ? `${error.message}` : 'Unknown error',
+          duration: Date.now() - startTime,
+        };
+      }
+    },
+  });
 }
-
-interface DirParams {
-  dirPath: string;
-}
-
-export const readFileTool = new Tool<FileParams>({
-  name: 'readFile',
-  description: 'Read the contents of a file',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      filePath: {
-        type: 'string',
-        description: 'Path to the file to read',
-      },
-    },
-    required: ['filePath'],
-  },
-  execute: async ({ input }) => {
-    const filePath = input.filePath;
-    try {
-      const content = await fs.readFile(filePath, 'utf-8');
-      return { success: true, data: content };
-    } catch (error) {
-      return { success: false, data: (error as Error).message };
-    }
-  },
-});
-
-export const writeFileTool = new Tool<WriteFileParams>({
-  name: 'writeFile',
-  description: 'Write content to a file',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      filePath: {
-        type: 'string',
-        description: 'Path to the file to write',
-      },
-      content: {
-        type: 'string',
-        description: 'Content to write to the file',
-      },
-    },
-    required: ['filePath', 'content'],
-  },
-  execute: async ({ input }) => {
-    const filePath = input.filePath;
-    const content = input.content;
-    try {
-      await fs.writeFile(filePath, content, 'utf-8');
-      return { success: true, data: 'File written successfully' };
-    } catch (error) {
-      return { success: false, data: (error as Error).message };
-    }
-  },
-});
-
-export const listDirectoryTool = new Tool<DirParams>({
-  name: 'listDirectory',
-  description: 'List contents of a directory',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      dirPath: {
-        type: 'string',
-        description: 'Path to the directory to list',
-      },
-    },
-    required: ['dirPath'],
-  },
-  execute: async ({ input }) => {
-    const dirPath = input.dirPath;
-    try {
-      const items = await fs.readdir(dirPath);
-      const itemsWithStats = await Promise.all(
-        items.map(async (item) => {
-          const fullPath = path.join(dirPath, item);
-          const stats = await fs.stat(fullPath);
-          return {
-            name: item,
-            isDirectory: stats.isDirectory(),
-            size: stats.size,
-          };
-        })
-      );
-      return { 
-        success: true, 
-        data: JSON.stringify(itemsWithStats, null, 2)
-      };
-    } catch (error) {
-      return { success: false, data: (error as Error).message };
-    }
-  },
-});

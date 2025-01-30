@@ -2,7 +2,7 @@ import { runAgent } from './agent';
 
 async function main() {
   // Example usage
-  await runAgent('Can you analyze the code in src/agent.ts and tell me what functions it contains?');
+  await runAgent('Create a snake game using html, css and javascript');
 }
 
 main().catch(console.error); 
