@@ -190,7 +190,7 @@ MIT License
 
 - Built with modern AI techniques and best practices
 - Inspired by real-world agent implementations
-- Uses the @agenite framework for agent development
+- Uses the [@agenite](https://github.com/subeshb1/agenite) framework for agent development
 
 ---
 *Note: This repository is actively maintained alongside the blog series. Check back for updates and new examples as new blog posts are published.*
